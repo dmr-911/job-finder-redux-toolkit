@@ -25,6 +25,16 @@ const Jobs = () => {
     updatedJobsArr = [...jobs];
   }
 
+  // search conditions
+  if (search) {
+    const searchedJobs = updatedJobsArr.filter((job) =>
+      job.title.toLowerCase().includes(search.toLowerCase())
+    );
+    updatedJobsArr = searchedJobs;
+  } else {
+    updatedJobsArr = [...jobs];
+  }
+
   const dispatch = useDispatch();
   // effect for fetching jobs
   useEffect(() => {
