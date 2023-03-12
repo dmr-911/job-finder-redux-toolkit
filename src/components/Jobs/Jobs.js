@@ -7,21 +7,23 @@ import Error from "../Error";
 
 const Jobs = () => {
   const { isLoading, isError, jobs, error } = useSelector((state) => state.job);
-  const { search, sortBySalary } = useSelector((state) => state.filter);
   let updatedJobsArr = [...jobs];
+  const { search, sortBySalary } = useSelector((state) => state.filter);
 
   // sort by salary conditions
   if (sortBySalary === "lowToHigh") {
-    const newJobs = [...updatedJobsArr]?.sort(
+    const lowToHighJobs = updatedJobsArr.sort(
       (a, b) => Number(a.salary) - Number(b.salary)
     );
-    updatedJobsArr = newJobs;
+    console.log("low to high", lowToHighJobs);
+    updatedJobsArr = lowToHighJobs;
   } else if (sortBySalary === "highToLow") {
-    const newJobs = [...updatedJobsArr]?.sort(
+    const highToLowJobs = updatedJobsArr.sort(
       (a, b) => Number(b.salary) - Number(a.salary)
     );
-    updatedJobsArr = newJobs;
-  } else {
+
+    updatedJobsArr = highToLowJobs;
+  } else if (sortBySalary === "default") {
     updatedJobsArr = [...jobs];
   }
 
@@ -31,8 +33,6 @@ const Jobs = () => {
       job.title.toLowerCase().includes(search.toLowerCase())
     );
     updatedJobsArr = searchedJobs;
-  } else {
-    updatedJobsArr = [...jobs];
   }
 
   const dispatch = useDispatch();
@@ -51,8 +51,11 @@ const Jobs = () => {
   if (!isLoading && !isError && !jobs?.length)
     content = <div>No jobs found!</div>;
 
-  if (!isLoading && !isError && jobs?.length)
-    content = updatedJobsArr?.map((job) => <Job key={job.id} job={job} />);
+  if (!isLoading && !isError && updatedJobsArr?.length)
+    content = updatedJobsArr?.map((job) => {
+      // console.log(job);
+      return <Job key={job.id} job={job} />;
+    });
 
   return <div className="jobs-list ">{content}</div>;
 };
