@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { filterType } from "../features/filter/filterSlice";
 import { cancelJobEdit } from "../features/job/jobSlice";
 
 const Navbar = () => {
@@ -9,6 +10,7 @@ const Navbar = () => {
 
   const handleLogoClick = () => {
     dispatch(cancelJobEdit());
+    dispatch(filterType());
     navigate("/");
   };
   return (

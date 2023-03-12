@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   search: "",
   sortBySalary: "default",
+  type: "all",
 };
 
 const filterSlice = createSlice({
@@ -16,8 +17,15 @@ const filterSlice = createSlice({
     sortBySalary: (state, action) => {
       state.sortBySalary = action.payload;
     },
+    filterType: (state, action) => {
+      if (action.payload) {
+        state.type = action.payload;
+      } else {
+        state.type = "all";
+      }
+    },
   },
 });
 
 export default filterSlice.reducer;
-export const { searchJob, sortBySalary } = filterSlice.actions;
+export const { searchJob, sortBySalary, filterType } = filterSlice.actions;

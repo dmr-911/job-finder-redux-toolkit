@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Job from "./Job";
 import { fetchAsyncJobs } from "../../features/job/jobSlice";
 import Loading from "../Loading";
 import Error from "../Error";
+import {
+  ALL_JOBS,
+  FULL_TIME,
+  INTERN,
+  REMOTE,
+} from "../../features/filter/filterTypes";
 
 const Jobs = () => {
   const { isLoading, isError, jobs, error } = useSelector((state) => state.job);
   let updatedJobsArr = [...jobs];
-  const { search, sortBySalary } = useSelector((state) => state.filter);
+  const { search, sortBySalary, type } = useSelector((state) => state.filter);
 
-  // sort by salary conditions
+  // sort by salary conditions *****
   if (sortBySalary === "lowToHigh") {
     const lowToHighJobs = updatedJobsArr.sort(
       (a, b) => Number(a.salary) - Number(b.salary)
@@ -27,12 +33,30 @@ const Jobs = () => {
     updatedJobsArr = [...jobs];
   }
 
-  // search conditions
+  // search conditions *****
   if (search) {
     const searchedJobs = updatedJobsArr.filter((job) =>
       job.title.toLowerCase().includes(search.toLowerCase())
     );
     updatedJobsArr = searchedJobs;
+  }
+
+  // type conditions *****
+  if (type === FULL_TIME) {
+    const fullTimeJobs = updatedJobsArr.filter((job) =>
+      job.type.toLowerCase().includes("full")
+    );
+    updatedJobsArr = fullTimeJobs;
+  } else if (type === REMOTE) {
+    const remoteJobs = updatedJobsArr.filter((job) =>
+      job.type.toLowerCase().includes("remote")
+    );
+    updatedJobsArr = remoteJobs;
+  } else if (type === INTERN) {
+    const internJobs = updatedJobsArr.filter((job) =>
+      job.type.toLowerCase().includes("intern")
+    );
+    updatedJobsArr = internJobs;
   }
 
   const dispatch = useDispatch();

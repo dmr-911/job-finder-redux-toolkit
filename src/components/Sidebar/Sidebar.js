@@ -1,34 +1,62 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { filterType } from "../../features/filter/filterSlice";
+import {
+  ALL_JOBS,
+  FULL_TIME,
+  INTERN,
+  REMOTE,
+} from "../../features/filter/filterTypes";
 
 const Sidebar = () => {
+  const { type } = useSelector((state) => state.filter);
+  const dispatch = useDispatch();
+
+  const handleJobsType = (type) => {
+    dispatch(filterType(type));
+  };
   return (
     <div className="sidebar">
       <nav>
         <ul className="space-y-4">
           <li>
-            <Link to="/jobs" className="main-menu menu-active lws-allJob">
+            <button
+              className={`main-menu lws-allJob ${
+                type === ALL_JOBS && "menu-active"
+              }`}
+              onClick={() => handleJobsType(ALL_JOBS)}
+            >
               <i className="fa-solid fa-briefcase" />
               <span> All Available Jobs</span>
-            </Link>
+            </button>
             <ul className="space-y-6 lg:space-y-2 ">
               <li>
-                <Link className="sub-menu" to="/jobs/internship">
+                <button
+                  className={`sub-menu ${type === INTERN && "menu-active"}`}
+                  onClick={() => handleJobsType(INTERN)}
+                >
                   <i className="fa-solid fa-stop !text-[#FF5757]" />
                   Internship
-                </Link>
+                </button>
               </li>
               <li>
-                <Link className="sub-menu" to="/jobs/fulltime">
+                <button
+                  className={`sub-menu ${type === FULL_TIME && "menu-active"}`}
+                  onClick={() => handleJobsType(FULL_TIME)}
+                >
                   <i className="fa-solid fa-stop !text-[#FF8A00]" />
                   Full Time
-                </Link>
+                </button>
               </li>
               <li>
-                <Link className="sub-menu" to="/jobs/remote">
+                <button
+                  className={`sub-menu ${type === REMOTE && "menu-active"}`}
+                  onClick={() => handleJobsType(REMOTE)}
+                >
                   <i className="fa-solid fa-stop !text-[#56E5C4]" />
                   Remote
-                </Link>
+                </button>
               </li>
             </ul>
           </li>

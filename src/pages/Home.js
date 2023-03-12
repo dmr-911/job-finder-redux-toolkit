@@ -1,10 +1,11 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Jobs from "../components/Jobs/Jobs";
 import { searchJob, sortBySalary } from "../features/filter/filterSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const filter = useSelector((state) => state.filter);
 
   // salary sort handler
   const handleSalarySort = (e) => {
@@ -36,6 +37,7 @@ const Home = () => {
             name="sort"
             autoComplete="sort"
             className="flex-1"
+            value={filter.sortBySalary}
             onChange={handleSalarySort}
           >
             <option value="default">Default</option>
