@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addJob, deleteJob, fetchJobs } from "./jobAPI";
+import { addJob, deleteJob, editJob, fetchJobs } from "./jobAPI";
 
 const initialState = {
   isLoading: false,
   isError: false,
   jobs: [],
+  isJobEdit: {},
   error: "",
 };
 
@@ -24,7 +25,7 @@ export const createJob = createAsyncThunk("job/createJob", async (job) => {
 export const updateJob = createAsyncThunk(
   "job/updateJob",
   async ({ id, jobData }) => {
-    const data = await addJob(id, jobData);
+    const data = await editJob(id, jobData);
     return data;
   }
 );
@@ -39,6 +40,14 @@ export const removeJob = createAsyncThunk("job/removeJob", async (id) => {
 const jobSlice = createSlice({
   name: "job",
   initialState,
+  reducers: {
+    jobEdit: (state, action) => {
+      state.isJobEdit = action.payload;
+    },
+    cancelJobEdit: (state) => {
+      state.isJobEdit = {};
+    },
+  },
   extraReducers: (builder) => {
     // builder for fetch jobs
     builder
@@ -120,3 +129,4 @@ const jobSlice = createSlice({
 });
 
 export default jobSlice.reducer;
+export const { jobEdit, cancelJobEdit } = jobSlice.actions;

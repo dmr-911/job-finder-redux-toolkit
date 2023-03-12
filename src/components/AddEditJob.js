@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { createJob } from "../features/job/jobSlice";
+import { createJob, updateJob } from "../features/job/jobSlice";
 
 const initialState = {
   title: "",
@@ -12,6 +12,23 @@ const initialState = {
 
 const AddEditJob = () => {
   const [form, setForm] = useState(initialState);
+
+  const { isJobEdit } = useSelector((state) => state.job);
+  const { id } = isJobEdit || {};
+
+  useEffect(() => {
+    if (isJobEdit?.id) {
+      setForm({
+        title: isJobEdit?.title,
+        salary: isJobEdit?.salary,
+        type: isJobEdit?.type,
+        deadline: isJobEdit?.deadline,
+      });
+    } else {
+      setForm(initialState);
+    }
+  }, [isJobEdit]);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,11 +39,23 @@ const AddEditJob = () => {
     navigate("/");
   };
 
+  // update job handler
+  const handleUpdateJob = (e) => {
+    e.preventDefault();
+    dispatch(updateJob({ id, jobData: form }));
+    navigate("/");
+  };
+
   return (
     <>
-      <h1 className="mb-10 text-center section-title">Add New Job</h1>
+      <h1 className="mb-10 text-center section-title">
+        {id ? "Update" : "Add New"} Job
+      </h1>
       <div className="max-w-3xl mx-auto">
-        <form className="space-y-6" onSubmit={handleAddJob}>
+        <form
+          className="space-y-6"
+          onSubmit={id ? handleUpdateJob : handleAddJob}
+        >
           {/* select job field and options */}
           <div className="fieldContainer">
             <label
@@ -40,7 +69,7 @@ const AddEditJob = () => {
               name="lwsJobTitle"
               autoComplete="lwsJobTitle"
               required
-              defaultChecked=""
+              value={form?.title}
               onChange={(e) =>
                 setForm((prevState) => ({
                   ...prevState,
@@ -75,7 +104,7 @@ const AddEditJob = () => {
               id="lwsJobType"
               name="lwsJobType"
               autoComplete="lwsJobType"
-              defaultValue=""
+              value={form?.type}
               onChange={(e) =>
                 setForm((prevState) => ({
                   ...prevState,
@@ -102,6 +131,7 @@ const AddEditJob = () => {
                 type="number"
                 name="lwsJobSalary"
                 id="lwsJobSalary"
+                value={form?.salary}
                 onChange={(e) =>
                   setForm((prevState) => ({
                     ...prevState,
@@ -119,6 +149,7 @@ const AddEditJob = () => {
           <div className="fieldContainer">
             <label htmlFor="lwsJobDeadline">Deadline</label>
             <input
+              value={form?.deadline}
               onChange={(e) =>
                 setForm((prevState) => ({
                   ...prevState,
@@ -136,7 +167,7 @@ const AddEditJob = () => {
           <div className="text-right">
             <input
               type="submit"
-              value="Save"
+              value={id ? "Update" : "Save"}
               className="lws-submit cursor-pointer btn btn-primary w-fit"
             />
           </div>

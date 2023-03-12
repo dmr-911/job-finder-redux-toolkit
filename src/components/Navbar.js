@@ -1,10 +1,14 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { cancelJobEdit } from "../features/job/jobSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogoClick = () => {
+    dispatch(cancelJobEdit());
     navigate("/");
   };
   return (

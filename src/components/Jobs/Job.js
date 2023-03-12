@@ -1,10 +1,13 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { removeJob } from "../../features/job/jobSlice";
+import { useNavigate } from "react-router-dom";
+import { jobEdit, removeJob } from "../../features/job/jobSlice";
 
 const Job = ({ job }) => {
   const { id, title, type, salary, deadline } = job || {};
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // decide text color based on job type
   let text;
@@ -19,6 +22,11 @@ const Job = ({ job }) => {
   // handlers
   const handleJobDelete = () => {
     dispatch(removeJob(id));
+  };
+
+  const handleJobEdit = async () => {
+    dispatch(jobEdit(job));
+    navigate("/jobs");
   };
 
   return (
@@ -46,7 +54,11 @@ const Job = ({ job }) => {
       </div>
       <div className="mt-5 flex lg:mt-0 lg:ml-4">
         <span className="hidden sm:block">
-          <button type="button" className="lws-edit btn btn-primary">
+          <button
+            type="button"
+            className="lws-edit btn btn-primary"
+            onClick={handleJobEdit}
+          >
             <i className="fa-solid fa-pen text-gray-300 -ml-1 mr-2" />
             Edit
           </button>
