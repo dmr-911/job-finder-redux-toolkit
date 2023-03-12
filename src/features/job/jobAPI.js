@@ -1,7 +1,13 @@
 import axios from "../../Axios/axios";
 
-export const addJob = async () => {
+export const fetchJobs = async () => {
   const { data } = await axios.get("/jobs");
+
+  return data;
+};
+
+export const addJob = async (job) => {
+  const { data } = await axios.post("/jobs", job);
 
   return data;
 };
