@@ -1,7 +1,20 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import Jobs from "../components/Jobs/Jobs";
+import { searchJob, sortBySalary } from "../features/filter/filterSlice";
 
 const Home = () => {
+  const dispatch = useDispatch();
+
+  // salary sort handler
+  const handleSalarySort = (e) => {
+    dispatch(sortBySalary(e.target.value));
+  };
+
+  // search handler
+  const handleSearch = (e) => {
+    dispatch(searchJob(e.target.value));
+  };
 
   return (
     <main className="max-w-3xl rounded-lg  mx-auto relative z-20 p-10 xl:max-w-none bg-[#1E293B]">
@@ -15,6 +28,7 @@ const Home = () => {
               placeholder="Search Job"
               className="search-input"
               id="lws-searchJob"
+              onChange={handleSearch}
             />
           </div>
           <select
@@ -22,10 +36,11 @@ const Home = () => {
             name="sort"
             autoComplete="sort"
             className="flex-1"
+            onChange={handleSalarySort}
           >
-            <option>Default</option>
-            <option>Salary (Low to High)</option>
-            <option>Salary (High to Low)</option>
+            <option value="default">Default</option>
+            <option value="lowToHigh">Salary (Low to High)</option>
+            <option value="highToLow">Salary (High to Low)</option>
           </select>
         </div>
       </div>
