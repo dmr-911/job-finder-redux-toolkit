@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { filterType } from "../../features/filter/filterSlice";
 import {
   ALL_JOBS,
@@ -12,9 +12,11 @@ import {
 const Sidebar = () => {
   const { type } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
+  const navigate = useNavigate("/");
 
   const handleJobsType = (type) => {
     dispatch(filterType(type));
+    navigate("/");
   };
   return (
     <div className="sidebar">

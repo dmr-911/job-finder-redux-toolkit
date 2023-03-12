@@ -5,7 +5,6 @@ import { fetchAsyncJobs } from "../../features/job/jobSlice";
 import Loading from "../Loading";
 import Error from "../Error";
 import {
-  ALL_JOBS,
   FULL_TIME,
   INTERN,
   REMOTE,
