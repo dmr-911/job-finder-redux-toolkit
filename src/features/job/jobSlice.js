@@ -104,18 +104,15 @@ const jobSlice = createSlice({
     builder
       .addCase(removeJob.pending, (state) => {
         state.isError = false;
-        state.isLoading = true;
       })
       .addCase(removeJob.fulfilled, (state, action) => {
         state.isError = false;
-        state.isLoading = false;
         // state.jobs.push(action.payload);
         state.error = "";
 
         state.jobs = state.jobs.filter((job) => job.id !== action.meta.arg);
       })
       .addCase(removeJob.rejected, (state, action) => {
-        state.isLoading = false;
         state.isError = true;
         state.error = action.error.message;
       });

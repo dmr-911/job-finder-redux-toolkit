@@ -1,14 +1,8 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import Jobs from "../components/Jobs/Jobs";
-import { fetchAsyncJobs } from "../features/job/jobSlice";
 
 const Home = () => {
-  const dispatch = useDispatch();
-  // effect for fetching jobs
-  useEffect(() => {
-    dispatch(fetchAsyncJobs());
-  }, [dispatch]);
+
   return (
     <main className="max-w-3xl rounded-lg  mx-auto relative z-20 p-10 xl:max-w-none bg-[#1E293B]">
       <div className="md:flex space-y-2 md:space-y-0 justify-between mb-10 ">

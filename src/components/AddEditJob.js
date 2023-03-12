@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { createJob } from "../features/job/jobSlice";
 
 const initialState = {
@@ -12,13 +13,13 @@ const initialState = {
 const AddEditJob = () => {
   const [form, setForm] = useState(initialState);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // add job handler
   const handleAddJob = (e) => {
     e.preventDefault();
     dispatch(createJob(form));
-
-    setForm(initialState);
+    navigate("/");
   };
 
   return (
