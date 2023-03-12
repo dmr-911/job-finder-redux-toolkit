@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
@@ -6,36 +7,36 @@ const Sidebar = () => {
       <nav>
         <ul className="space-y-4">
           <li>
-            <a href="/jobs" className="main-menu menu-active lws-allJob">
+            <Link to="/jobs" className="main-menu menu-active lws-allJob">
               <i className="fa-solid fa-briefcase" />
               <span> All Available Jobs</span>
-            </a>
+            </Link>
             <ul className="space-y-6 lg:space-y-2 ">
               <li>
-                <a className="sub-menu" href="/jobs/internship">
+                <Link className="sub-menu" to="/jobs/internship">
                   <i className="fa-solid fa-stop !text-[#FF5757]" />
                   Internship
-                </a>
+                </Link>
               </li>
               <li>
-                <a className="sub-menu" href="/jobs/fulltime">
+                <Link className="sub-menu" to="/jobs/fulltime">
                   <i className="fa-solid fa-stop !text-[#FF8A00]" />
                   Full Time
-                </a>
+                </Link>
               </li>
               <li>
-                <a className="sub-menu" href="/jobs/remote">
+                <Link className="sub-menu" to="/jobs/remote">
                   <i className="fa-solid fa-stop !text-[#56E5C4]" />
                   Remote
-                </a>
+                </Link>
               </li>
             </ul>
           </li>
           <li>
-            <a href="/jobs" className="main-menu lws-AddJob">
+            <Link to="/jobs" className="main-menu lws-AddJob">
               <i className="fa-solid fa-file-circle-plus" />
               <span>Add NewJob</span>
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>

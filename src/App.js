@@ -11,8 +11,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/edit-job" element={<AddEditJob />} />
-          <Route path="/add-job" element={<AddEditJob />} />
+          <Route path="/jobs" element={<AddEditJob />} />
         </Routes>
       </Layout>
     </Router>
