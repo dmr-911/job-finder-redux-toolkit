@@ -13,7 +13,7 @@ export const addJob = async (job) => {
 };
 
 export const editJob = async (id, jobData) => {
-  const { data } = await axios.put(`/jobs/${id}`, jobData);
+  const { data } = await axios.patch(`/jobs/${id}`, jobData);
 
   return data;
 };
